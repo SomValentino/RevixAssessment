@@ -3,3 +3,11 @@
 ################################################################################
 
 /.vs
+/Revix.Rate.API/.vs/Revix.Rate.API/v17
+/Revix.Rate.API/Revix.Rate.API/obj
+/Revix.Rate.API/Revix.Rate.Applicatiion/obj
+/Revix.Rate.API/Revix.Rate.Infrastructure/obj
+/Revix.Rate.Domain/obj
+/Revix.Rate.API/obj
+/Revix.Rate.Application/obj
+/Revix.Rate.Infrastructure/obj
