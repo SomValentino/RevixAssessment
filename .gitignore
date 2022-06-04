@@ -11,3 +11,5 @@
 /Revix.Rate.API/obj
 /Revix.Rate.Application/obj
 /Revix.Rate.Infrastructure/obj
+obj
+bin
