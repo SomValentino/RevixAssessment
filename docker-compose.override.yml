@@ -1,22 +1,23 @@
 version: '3.4'
 
 services:
-  revix.rate.db:
-    container_name: revix.rate.db
+  ratedb:
+    container_name: ratedb
     restart: always
     ports:
       - 27017:27017
     volumes:
-      - revixratedb_mongo_data:/data/db
-  revix.rate.api:
+      - ratedb_mongo_data:/data/db
+  rateapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - DatabaseSettings__ConnectionString=mongodb://ratedb
+      - DatabaseSettings__DatabaseName=RateDb
+      - DatabaseSettings__CollectionName=Rates
+      - ExternalProviderSettings__BaseUrl=https://sandbox-api.coinmarketcap.com
+      - ExternalProviderSettings__RatePath=v1/cryptocurrency/listings/latest
+      - ExternalProviderSettings__ApiKey=f25cb104-1984-4fe6-8c40-73b5517e9bbd
     ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - 5001:80
     depends_on:
-      - revix.rate.db
+      - ratedb

@@ -1,13 +1,13 @@
 version: '3.4'
 
 services:
-  revix.rate.db:
+  ratedb:
     image: mongo
-  revix.rate.api:
+  rateapi:
     image: ${DOCKER_REGISTRY-}revixrateapi
     build:
       context: .
       dockerfile: Revix.Rate.API/Dockerfile
 
 volumes:
-  revixratedb_mongo_data:
+  ratedb_mongo_data:
