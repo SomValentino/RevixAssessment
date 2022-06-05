@@ -1,6 +1,13 @@
 version: '3.4'
 
 services:
+  revix.rate.db:
+    container_name: revix.rate.db
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - revixratedb_mongo_data:/data/db
   revix.rate.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -11,3 +18,5 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - revix.rate.db

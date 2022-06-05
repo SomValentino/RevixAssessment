@@ -6,16 +6,19 @@ using Revix.Rate.Application.Services;
 
 namespace Revix.Rate.Application;
 
-public static class ApplicationServices {
+public static class ApplicationServiceRegistration {
    public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection, IConfiguration configuration)
    {
        serviceCollection.AddScoped<IRateService,RateService>();
 
        serviceCollection.AddHttpClient("RateClient",options => {
-           options.BaseAddress = new Uri(configuration["baseUrl"]);
+           options.BaseAddress = new Uri(configuration["ExternalProviderSettings:BaseUrl"]);
            options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+           options.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", configuration["ExternalProviderSettings:ApiKey"]);
        });
-       
-       return serviceCollection;
+
+        serviceCollection.AddHostedService<RateHostedService>();
+
+        return serviceCollection;
    }
 }

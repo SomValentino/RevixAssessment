@@ -1,0 +1,48 @@
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Revix.Rate.Application.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Revix.Rate.Application.Features
+{
+    public class RateHostedService : BackgroundService
+    {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly ILogger<RateHostedService> _logger;
+
+        public RateHostedService(IServiceProvider serviceProvider, ILogger<RateHostedService> logger)
+        {
+            _serviceProvider = serviceProvider;
+            _logger = logger;
+        }
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                using var scope = _serviceProvider.CreateScope();
+                var rateService = scope.ServiceProvider.GetRequiredService<IRateService>();
+                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                var path = configuration["ratepath"];
+                try
+                {
+                    _logger.LogInformation("Getting daily rate at: {time}", DateTimeOffset.Now);
+                    await rateService.GetDailyRate(path);
+                    _logger.LogInformation("Succesfully obtained daily rate at: {time}", DateTimeOffset.Now);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.Message,ex);
+                    throw;
+                }
+                await Task.Delay(10000, stoppingToken);
+            }
+        }
+    }
+}

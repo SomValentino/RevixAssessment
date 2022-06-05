@@ -14,4 +14,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Revix.Rate.Application\Revix.Rate.Application.csproj" />
+    <ProjectReference Include="..\Revix.Rate.Infrastructure\Revix.Rate.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

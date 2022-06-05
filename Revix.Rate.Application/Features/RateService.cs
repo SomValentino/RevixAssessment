@@ -10,12 +10,14 @@ public class RateService : IRateService {
     private readonly IRateRepository _repository;
     private readonly HttpClient _client;
 
-    public RateService (IRateRepository repository, IHttpClientFactory httpFactory) {
+    public RateService (IRateRepository repository, IHttpClientFactory httpFactory) 
+    {
         _repository = repository;
         _client = httpFactory.CreateClient ("RateClient");
     }
 
-    public async Task<ApiResponse> GetDailyRate (string path) {
+    public async Task GetDailyRate (string path) 
+    {
         var response = await _client.GetAsync (path);
 
         response.EnsureSuccessStatusCode ();
@@ -25,8 +27,17 @@ public class RateService : IRateService {
         var apiResponse = JsonConvert.DeserializeObject<ApiResponse> (data);
 
         await SaveRate(apiResponse);
+    }
 
-        return apiResponse;
+    public async Task<IEnumerable<ApiResponse>> GetRateForDateRange(DateTime startDate, DateTime endDate)
+    {
+        var startDateFilter = Builders<ApiResponse>.Filter.Gte(x => x.Status.Timestamp, startDate);
+        var endDateFilter = Builders<ApiResponse>.Filter.Lte(x => x.Status.Timestamp, endDate);
+        var combinedFilter = Builders<ApiResponse>.Filter.And(startDateFilter, endDateFilter);
+
+        var rates = await _repository.GetAsync(combinedFilter);
+
+        return rates;
     }
 
     public async Task SaveRate (ApiResponse response) 
