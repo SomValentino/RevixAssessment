@@ -4,13 +4,13 @@ using Revix.Rate.Domain.Models;
 
 namespace Revix.Rate.Infrastructure.Repository;
 
-public class RateRepository : BaseRepository<ApiResponse>,IRateRepository {
-    public RateRepository(IDataContext<ApiResponse> context) : base(context)
+public class RateRepository : BaseRepository<CoinRate>,IRateRepository {
+    public RateRepository(IDataContext<CoinRate> context) : base(context)
     {
         
     }
 
-    public async Task<bool> SaveRate(ApiResponse response)
+    public async Task<bool> SaveRate(CoinRate response)
     {
         await Create(response);
         return true;

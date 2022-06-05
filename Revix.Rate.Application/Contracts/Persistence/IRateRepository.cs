@@ -2,7 +2,7 @@ using Revix.Rate.Domain.Models;
 
 namespace Revix.Rate.Application.Contracts.Persistence;
 
-public interface IRateRepository: IRepository<ApiResponse> 
+public interface IRateRepository: IRepository<CoinRate> 
 {
-    Task<bool> SaveRate(ApiResponse response);
+    Task<bool> SaveRate(CoinRate response);
 }

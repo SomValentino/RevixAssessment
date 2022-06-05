@@ -4,14 +4,14 @@ using Revix.Rate.Domain.Models;
 
 namespace Revix.Rate.Infrastructure.Data;
 
-public class RateDataContext : IDataContext<ApiResponse> {
+public class RateDataContext : IDataContext<CoinRate> {
     public RateDataContext (string connectionString, string database, string collectionName) 
     {
         Client = new MongoClient (connectionString);
         Database = Client.GetDatabase (database);
-        Collections = Database.GetCollection<ApiResponse> (collectionName);
+        Collections = Database.GetCollection<CoinRate> (collectionName);
     }
-    public IMongoCollection<ApiResponse> Collections { get; set; }
+    public IMongoCollection<CoinRate> Collections { get; set; }
     public IMongoClient Client { get; set; }
     public IMongoDatabase Database { get; set; }
 }

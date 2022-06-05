@@ -1,8 +1,8 @@
 using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Revix.Rate.Application.Features;
-using Revix.Rate.Application.Services;
+using Revix.Rate.Application.Features.Services;
+using Revix.Rate.Application.Contracts.Services;
 
 namespace Revix.Rate.Application;
 

@@ -1,31 +1,33 @@
 using Revix.Rate.Application;
+using Revix.Rate.Application.Features.Middleware;
 using Revix.Rate.Infrastructure;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder (args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers ();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer ();
+builder.Services.AddSwaggerGen ();
 builder.Services
-            .AddApplicationServices(builder.Configuration)
-            .AddApplicationInfrastructureService(builder.Configuration);
+    .AddApplicationServices (builder.Configuration)
+    .AddApplicationInfrastructureService (builder.Configuration);
 
-var app = builder.Build();
+var app = builder.Build ();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+if (app.Environment.IsDevelopment ()) {
+    app.UseSwagger ();
+    app.UseSwaggerUI ();
 }
 
-app.UseHttpsRedirection();
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
-app.UseAuthorization();
+app.UseHttpsRedirection ();
 
-app.MapControllers();
+app.UseAuthorization ();
 
-app.Run();
+app.MapControllers ();
+
+app.Run ();

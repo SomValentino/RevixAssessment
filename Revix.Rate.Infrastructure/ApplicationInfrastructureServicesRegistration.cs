@@ -8,10 +8,11 @@ using Revix.Rate.Infrastructure.Repository;
 
 namespace Revix.Rate.Infrastructure;
 
-public static class ApplicationInfrastructureServicesRegistration {
+public static class ApplicationInfrastructureServicesRegistration 
+{
     public static IServiceCollection AddApplicationInfrastructureService (this IServiceCollection serviceCollection, IConfiguration configuration) 
     {
-        serviceCollection.AddScoped<IDataContext<ApiResponse>, RateDataContext> (options => {
+        serviceCollection.AddScoped<IDataContext<CoinRate>, RateDataContext> (options => {
             var connectionString = configuration["DatabaseSettings:ConnectionString"];
             var database = configuration["DatabaseSettings:DatabaseName"];
             var collectionName = configuration["DatabaseSettings:CollectionName"];

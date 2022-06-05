@@ -1,12 +1,12 @@
 using Revix.Rate.Domain.Models;
 
-namespace Revix.Rate.Application.Services;
+namespace Revix.Rate.Application.Contracts.Services;
 
 public interface IRateService 
 {
     Task GetDailyRate(string path);
 
-    Task<IEnumerable<ApiResponse>> GetRateForDateRange(DateTime startDate, DateTime endDate);
+    Task<IEnumerable<CoinRate>> GetRateForDateRange(DateTime startDate, DateTime endDate);
 
-    Task SaveRate(ApiResponse response);
+    Task SaveRate(CoinRate response);
 }
