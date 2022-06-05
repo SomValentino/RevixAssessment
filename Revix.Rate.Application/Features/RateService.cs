@@ -24,6 +24,8 @@ public class RateService : IRateService {
 
         var apiResponse = JsonConvert.DeserializeObject<ApiResponse> (data);
 
+        await SaveRate(apiResponse);
+
         return apiResponse;
     }
 
