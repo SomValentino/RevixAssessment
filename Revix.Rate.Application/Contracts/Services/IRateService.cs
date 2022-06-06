@@ -4,7 +4,7 @@ namespace Revix.Rate.Application.Contracts.Services;
 
 public interface IRateService 
 {
-    Task GetDailyRate(string path);
+    Task<CoinRate> GetDailyRate(string path);
 
     Task<IEnumerable<CoinRate>> GetRateForDateRange(DateTime startDate, DateTime endDate);
 

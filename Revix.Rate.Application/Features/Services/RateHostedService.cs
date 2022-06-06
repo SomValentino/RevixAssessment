@@ -27,7 +27,8 @@ namespace Revix.Rate.Application.Features.Services {
                 var path = configuration["ExternalProviderSettings:RatePath"];
                 try {
                     _logger.LogInformation ("Getting daily rate at: {time}", DateTimeOffset.Now);
-                    await rateService.GetDailyRate (path);
+                    var coinRate = await rateService.GetDailyRate (path);
+                    await rateService.SaveRate(coinRate);
                     _logger.LogInformation ("Succesfully obtained daily rate at: {time}", DateTimeOffset.Now);
                 } catch (Exception ex) {
                     _logger.LogError (ex.Message, ex);

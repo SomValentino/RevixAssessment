@@ -15,7 +15,7 @@ public class RateService : IRateService {
         _client = httpFactory.CreateClient ("RateClient");
     }
 
-    public async Task GetDailyRate (string path) {
+    public async Task<CoinRate> GetDailyRate (string path) {
         // make api call
         var response = await _client.GetAsync (path);
         // ensure success
@@ -25,7 +25,7 @@ public class RateService : IRateService {
 
         var coinRate = JsonConvert.DeserializeObject<CoinRate> (data);
 
-        await SaveRate (coinRate);
+        return coinRate;
     }
 
     public async Task<IEnumerable<CoinRate>> GetRateForDateRange (DateTime startDate, DateTime endDate) {
