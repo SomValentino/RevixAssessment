@@ -3,7 +3,7 @@
 The solution is made up of four projects
 
 ## Revix.Rate.API
-The api project that contains a baackground service that gets the daily rates and save it to the database.
+The api project that contains a baackground service that gets the daily rates and save it to the database. Access the api at http://localhost:5001/swagger
 
 ## Revix.Rate.Application
 The project that contains the business logic services and contracts
